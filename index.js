@@ -1,13 +1,12 @@
-const https = require('https');
+var express = require('express')
+var app = express();
 
-https.get('https://encrypted.google.com/', (res) => {
-  console.log('statusCode:', res.statusCode);
-  console.log('headers:', res.headers);
+app.set('view engine','ejs');
 
-  res.on('data', (d) => {
-    process.stdout.write(d);
-  });
+app.get('/produtos',function(req,res){
+    res.render("produtos/lista");
+});
 
-}).on('error', (e) => {
-  console.error(e);
+app.listen(3000, function(){
+    console.log("servidor rodando");
 });
