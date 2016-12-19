@@ -1,18 +1,13 @@
-var express = require('express')
-var http = require('http');
+const https = require('https');
 
-var app = express();
+https.get('https://encrypted.google.com/', (res) => {
+  console.log('statusCode:', res.statusCode);
+  console.log('headers:', res.headers);
 
-app.set('view engine','ejs');
+  res.on('data', (d) => {
+    process.stdout.write(d);
+  });
 
-app.get('/',function(req,res){
-    res.render("produtos/lista");
-});
-
-app.get('/produtos',function(req,res){
-    res.render("produtos/lista");
-});
-
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+}).on('error', (e) => {
+  console.error(e);
 });
